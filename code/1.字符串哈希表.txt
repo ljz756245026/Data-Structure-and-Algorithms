@@ -1,0 +1,50 @@
+输出出现次数最多的名字，次数相同输出先出现的
+输入：Tom,Jack,Lily,Lucy,Tom,Jack,Tom,Jack,Jack
+输出：Jack
+
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    string str;
+    getline(cin, str);
+    
+    unordered_map<string, int> hash;
+    vector<string> names;
+    
+    //分出人名
+    int len = 0;
+    for(int i = 0; i < str.size(); i ++)
+    {
+        while(str[i] != ',' && i < str.size())
+        {
+            i ++;
+            len ++;
+        }
+        string name = str.substr(i - len, len);
+        names.push_back(name);
+        hash[name] ++;
+        len = 0;
+    }
+    //for(auto name : names) cout << name << endl;
+    int maxnum = hash[names[0]];
+    string res = names[0];
+    //找到hash中最大的value
+    for(auto x : names)
+    {
+        if(hash[x] > maxnum)
+        {
+            res = x;
+            maxnum = hash[x];
+        }
+    }
+    cout << res << endl;
+    
+    
+    return 0;
+}
